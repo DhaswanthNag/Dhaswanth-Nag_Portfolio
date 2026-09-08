@@ -5,41 +5,46 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 const skillCategories = [
-  { 
-    title: 'Frontend Engineering', 
-    desc: 'Crafting responsive and interactive user interfaces using React, JavaScript, HTML5, CSS3, and Tailwind CSS.', 
-    tag: 'UI / INTERACTION',
-    skills: ['React', 'JavaScript', 'Tailwind CSS', 'HTML5', 'CSS3'] 
+  {
+    title: 'Frontend Engineering',
+    desc: 'Building responsive and engaging web interfaces with a focus on usability, accessibility, performance, and visual consistency.',
+    tag: 'INTERFACE ENGINEERING',
+    skills: ['React.js', 'JavaScript', 'HTML5', 'CSS3', 'Tailwind CSS']
   },
-  { 
-    title: 'Backend & Databases', 
-    desc: 'Building secure REST APIs, authentication flows, server-side applications, and high-performance database architectures.', 
-    tag: 'ARCHITECTURE',
-    skills: ['Node.js', 'Express', 'PostgreSQL', 'MongoDB', 'DQL'] 
+
+  {
+    title: 'Backend Engineering',
+    desc: 'Developing reliable server-side applications with structured APIs, business logic, authentication, and efficient data management.',
+    tag: 'SERVER & DATA',
+    skills: ['Node.js', 'Express.js', 'Java', 'Spring Boot', 'REST APIs']
   },
-  { 
-    title: 'AI & Machine Learning', 
-    desc: 'Developing intelligent applications leveraging NLP, generative AI workflows, computer vision, and LLM systems.', 
-    tag: 'INTELLIGENCE',
-    skills: ['NLP', 'Generative AI', 'Computer Vision', 'LLMs', 'AWS AI'] 
+
+  {
+    title: 'Database Management',
+    desc: 'Designing and working with structured data solutions while maintaining data integrity, efficient queries, and reliable application access.',
+    tag: 'DATA ENGINEERING',
+    skills: ['SQL', 'PostgreSQL', 'Database Design', 'Queries']
   },
-  { 
-    title: 'Cloud & DevOps', 
-    desc: 'Deploying and scaling production-grade applications using Docker containers, GitHub Actions, and CI/CD pipelines.', 
-    tag: 'INFRASTRUCTURE',
-    skills: ['Docker', 'GitHub', 'CI/CD Pipelines', 'Render', 'Docker Hub'] 
+
+  {
+    title: 'Cloud & Deployment',
+    desc: 'Understanding modern cloud environments and deployment workflows for delivering applications reliably and efficiently.',
+    tag: 'CLOUD & DELIVERY',
+    skills: ['AWS', 'Git', 'GitHub', 'Deployment', 'Cloud Fundamentals']
   },
-  { 
-    title: 'Algorithmic Problem Solving', 
-    desc: 'Optimizing data structures and solving complex algorithmic challenges across competitive programming platforms.', 
-    tag: 'COMPETITIVE',
-    skills: ['Data Structures', 'Algorithms', 'LeetCode', 'CodeChef', 'GFG'] 
+
+  {
+    title: 'Problem Solving',
+    desc: 'Applying analytical thinking and structured approaches to break down technical challenges and develop efficient solutions.',
+    tag: 'LOGIC & OPTIMIZATION',
+    skills: ['Data Structures', 'Algorithms', 'Problem Solving', 'Debugging']
   },
-  { 
-    title: 'Tools & Ecosystem', 
-    desc: 'Equipped with industry-grade instruments for version control, productivity extensions, and workflow management.', 
-    tag: 'PRODUCTIVITY',
-    skills: ['Git', 'Chrome APIs', 'Adobe Express', 'Google Cloud', 'VS Code'] 
+
+  {
+    title: 'Development & Deployment',
+    desc: 'Using modern development workflows and deployment platforms to build, manage, and deliver applications efficiently.',
+    tag: 'DEVELOPER WORKFLOW',
+    skills: ['Git', 'GitHub', 'VS Code', 'Postman', 'NPM', 'Vercel', 'Railway']
   },
 ];
 

@@ -12,10 +12,10 @@ const Hero = () => {
   const contentRef = useRef(null);
 
   const developerRoles = [
-    'FEATURE FILM // FULL-STACK ARCHITECT',
-    'ORIGINAL SERIES // AI & ML SPECIALIST',
-    'BLOCKBUSTER // DISTRIBUTED SYSTEMS',
-    'ACCLAIMED // ALGORITHMIC PROBLEM SOLVER'
+    'FEATURE FILM // FULL-STACK DEVELOPER',
+    'ORIGINAL SERIES // SOFTWARE ENGINEER',
+    'BLOCKBUSTER // CLOUD & APPLICATION ENGINEER',
+    'ACCLAIMED // PROBLEM SOLVER'
   ];
 
   useEffect(() => {
@@ -182,8 +182,8 @@ const Hero = () => {
             <span className="text-white/80">SEASONS 2024 - 2026</span>
           </div>
           <div className="hidden md:flex items-center gap-2 text-xs font-mono text-white/50 tracking-wider">
-            <span className="px-2 py-0.5 border border-white/20 rounded bg-black/40">FULL-STACK 4K</span>
-            <span className="px-2 py-0.5 border border-white/20 rounded bg-black/40">AI / ML CERTIFIED</span>
+            <span className="px-2 py-0.5 border border-white/20 rounded bg-black/40">FULL-STACK DEVELOPER</span>
+            <span className="px-2 py-0.5 border border-white/20 rounded bg-black/40">JAVA • AWS</span>
           </div>
         </div>
 
@@ -199,7 +199,7 @@ const Hero = () => {
             </div>
 
             <h1 className="hero-anim-item text-5xl md:text-7xl font-black tracking-tighter text-white leading-[0.95] drop-shadow-[0_15px_30px_rgba(0,0,0,0.9)]">
-              SUSHMITA <br />
+              DHASWANTH NAG <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-rose-600 to-red-700 drop-shadow-[0_0_35px_rgba(220,38,38,0.5)]">
                 DEV.ENGINE
               </span>
@@ -210,11 +210,11 @@ const Hero = () => {
               <span className="text-white/40">•</span>
               <span>React • Node.js • PostgreSQL</span>
               <span className="text-white/40">•</span>
-              <span className="text-white/70">Docker & Cloud</span>
+              <span className="text-white/70">Git & Cloud</span>
             </div>
 
             <p className="hero-anim-item text-sm md:text-base text-white/80 font-light leading-relaxed max-w-md drop-shadow">
-              Architecting robust full-stack systems, building scalable multi-tenant SaaS platforms, and engineering cutting-edge AI integrations.
+              Building scalable full-stack applications and seamless digital experiences with Java, Spring Boot, React.js, Node.js, and AWS.
             </p>
 
             {/* Action Button Set */}
@@ -278,9 +278,9 @@ const Hero = () => {
           <div className="hero-anim-item lg:col-span-3 flex flex-col items-start lg:items-end space-y-4 text-left lg:text-right">
             <div className="p-5 bg-black/80 backdrop-blur-2xl border border-white/15 rounded-xl shadow-2xl max-w-xs">
               <h3 className="text-xs font-mono uppercase tracking-widest text-red-500 font-bold mb-2">Core Stack & Awards</h3>
-              <p className="text-xs text-white/80 leading-relaxed font-light">
-                Flipkart GRiD 7.0 Semi-Finalist, AlgoUniversity Tech Fellow, GitHub Foundations Certified.
-              </p>
+                <p className="text-xs text-white/80 leading-relaxed font-light">
+                  Full-Stack Development, Java, Spring Boot, React.js, Node.js, AWS.
+                </p>
             </div>
           </div>
 
@@ -288,8 +288,8 @@ const Hero = () => {
 
         {/* Bottom Cinematic Ticker */}
         <div className="hero-anim-item flex items-center justify-between text-xs font-mono text-white/50 tracking-widest uppercase">
-          <span>ENGINEERED FOR SCALABILITY</span>
-          <span>[ PORTFOLIO RELEASE v2.6 ]</span>
+        <span>ENGINEERED FOR PERFORMANCE</span>
+        <span>[ DHASWANTH NAG PRATHI • 2026 ]</span>
         </div>
       </div>
 
@@ -307,13 +307,14 @@ const Hero = () => {
       {/* --- NETFLIX-THEMED DEVELOPER NAVBAR --- */}
       <header className="absolute top-0 left-0 z-50 w-full max-w-7xl mx-auto px-6 md:px-12 py-6 flex items-center justify-between pointer-events-auto">
         <div className="text-2xl font-black text-red-600 tracking-tighter flex items-center gap-2 drop-shadow-[0_2px_15px_rgba(229,9,20,0.9)]">
-          SUSHMITA<span className="w-1.5 h-1.5 rounded-full bg-white inline-block"></span>
+          DHASWANTH<span className="w-1.5 h-1.5 rounded-full bg-white inline-block"></span>
         </div>
         <nav className="hidden md:flex items-center gap-8 text-xs font-mono uppercase tracking-widest text-white/80">
           <a href="#home" className="hover:text-red-500 transition-colors">Home</a>
           <a href="#about" className="hover:text-red-500 transition-colors">About</a>
           <a href="#expertise" className="hover:text-red-500 transition-colors">Expertise</a>
           <a href="#skills" className="hover:text-red-500 transition-colors">Skills</a>
+          <a href="#internships" className="hover:text-red-500 transition-colors">Internships</a>
           <a href="#projects" className="hover:text-red-500 transition-colors">Projects</a>
           <a href="#contact" className="hover:text-red-500 transition-colors">Contact</a>
         </nav>

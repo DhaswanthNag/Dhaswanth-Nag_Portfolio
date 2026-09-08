@@ -81,9 +81,9 @@ const Contact = () => {
               <span className="w-1.5 h-1.5 rounded-full bg-red-600 animate-ping"></span>
               <span>EPISODE 04 // GET IN TOUCH</span>
             </div>
-            <span className="text-xs font-mono text-white/40 tracking-wider hidden md:block">
+            {/* <span className="text-xs font-mono text-white/40 tracking-wider hidden md:block">
               // LET'S BUILD SOMETHING CINEMATIC
-            </span>
+            </span> */}
           </div>
 
           <form onSubmit={handleSubmit} className="flex flex-col gap-12 md:gap-16 w-full">
@@ -165,7 +165,7 @@ const Contact = () => {
                 </p>
                 <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-6">
                   <p className="max-w-[250px] leading-relaxed">
-                    Ready to start a project or collaboration? Send a direct signal.
+                    Ready to start a project? Send a direct message.
                   </p>
                   
                   <button 

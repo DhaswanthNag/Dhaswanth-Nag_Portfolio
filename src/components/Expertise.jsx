@@ -7,30 +7,33 @@ gsap.registerPlugin(ScrollTrigger);
 const expertiseData = [
   {
     number: "01",
-    title: "Frontend Development",
-    text: "Crafting responsive, high-fidelity user interfaces with React, modern JavaScript, Tailwind CSS, and buttery smooth GSAP motion interactions.",
-    tag: "UI / UX & INTERACTION",
+    title: "Frontend Engineering",
+    text: "Designing responsive, intuitive interfaces with a strong focus on usability, visual consistency, performance, and smooth interaction.",
+    tag: "INTERFACE & EXPERIENCE",
     gradient: "from-[#1f0a0c] via-[#121212] to-[#0a0a0a]"
   },
+
   {
     number: "02",
-    title: "Backend Development",
-    text: "Architecting secure REST APIs, enterprise authentication pipelines, and scalable database schemas across PostgreSQL and MongoDB.",
-    tag: "API & ARCHITECTURE",
+    title: "Backend Engineering",
+    text: "Developing reliable server-side solutions with structured APIs, secure application logic, efficient data handling, and maintainable architecture.",
+    tag: "SERVICES & DATA",
     gradient: "from-[#1a0809] via-[#111111] to-[#090909]"
   },
+
   {
     number: "03",
-    title: "AI & Machine Learning",
-    text: "Integrating production-grade LLM workflows, predictive machine learning pipelines, and computer vision systems backed by AWS AI certification.",
-    tag: "INTELLIGENCE & ML",
+    title: "Software Development",
+    text: "Applying structured problem-solving to build clean, maintainable applications while turning requirements into practical and scalable solutions.",
+    tag: "LOGIC & SOLUTIONS",
     gradient: "from-[#220a0d] via-[#131313] to-[#0a0a0a]"
   },
+
   {
     number: "04",
     title: "Cloud & Deployment",
-    text: "Deploying resilient, containerized multi-tenant services using Docker, GitHub Actions CI/CD workflows, and optimized cloud hosting.",
-    tag: "DEVOPS & CLOUD",
+    text: "Working with modern development workflows to deliver applications efficiently, maintain reliable deployments, and support scalable environments.",
+    tag: "CLOUD & DELIVERY",
     gradient: "from-[#1d090b] via-[#101010] to-[#080808]"
   }
 ];
@@ -115,7 +118,7 @@ const Expertise = () => {
             </h2>
           </div>
           <p className="text-white/60 text-xs md:text-sm font-light leading-relaxed max-w-xs">
-            Merging full-stack engineering, scalable microservices, and AI integrations into production-ready platforms.
+             Turning ideas into reliable, user-focused digital experiences built with purpose and precision.
           </p>
         </div>
 
