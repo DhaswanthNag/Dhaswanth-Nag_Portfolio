@@ -60,7 +60,7 @@ const About = () => {
     <section
       id="about"
       ref={sectionRef}
-      className="relative w-full min-h-screen bg-[#050505] text-white py-32 px-6 md:px-12 flex flex-col justify-center select-none overflow-hidden"
+      className="relative w-full min-h-screen bg-[#050505] text-white py-16 px-6 md:px-12 flex flex-col justify-center select-none overflow-hidden"
     >
       {/* Background Cinematic Red Ambient Glows */}
       <div className="absolute top-1/4 left-10 w-[500px] h-[500px] bg-red-600/10 rounded-full blur-[160px] pointer-events-none"></div>

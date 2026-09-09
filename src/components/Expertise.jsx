@@ -4,41 +4,39 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const expertiseData = [
+const educationData = [
   {
     number: "01",
-    title: "Frontend Engineering",
-    text: "Designing responsive, intuitive interfaces with a strong focus on usability, visual consistency, performance, and smooth interaction.",
-    tag: "INTERFACE & EXPERIENCE",
+    title: "Sri Vasavi Institute of Engineering and Technology",
+    degree: "Computer Science & Engineering",
+    meta: "Pedana, A.P | 12/2021 - 04/2025",
+    aggregate: "Aggregate: 73%",
+    tag: "B.TECH - CSE",
     gradient: "from-[#1f0a0c] via-[#121212] to-[#0a0a0a]"
   },
 
   {
     number: "02",
-    title: "Backend Engineering",
-    text: "Developing reliable server-side solutions with structured APIs, secure application logic, efficient data handling, and maintainable architecture.",
-    tag: "SERVICES & DATA",
+    title: "Sri Chaitanya College",
+    degree: "MPC",
+    meta: "Vijayawada, A.P | 06/2019 - 07/2021",
+    aggregate: "Aggregate: 95%",
+    tag: "INTERMEDIATE - MPC",
     gradient: "from-[#1a0809] via-[#111111] to-[#090909]"
   },
 
   {
     number: "03",
-    title: "Software Development",
-    text: "Applying structured problem-solving to build clean, maintainable applications while turning requirements into practical and scalable solutions.",
-    tag: "LOGIC & SOLUTIONS",
+    title: "Narayana High School",
+    degree: "10th",
+    meta: "Palakol, A.P | 06/2018 - 04/2019",
+    aggregate: "Aggregate: 95%",
+    tag: "SSC",
     gradient: "from-[#220a0d] via-[#131313] to-[#0a0a0a]"
-  },
-
-  {
-    number: "04",
-    title: "Cloud & Deployment",
-    text: "Working with modern development workflows to deliver applications efficiently, maintain reliable deployments, and support scalable environments.",
-    tag: "CLOUD & DELIVERY",
-    gradient: "from-[#1d090b] via-[#101010] to-[#080808]"
   }
 ];
 
-const Expertise = () => {
+const Education = () => {
   const containerRef = useRef(null);
   const cardRefs = useRef([]);
 
@@ -92,7 +90,7 @@ const Expertise = () => {
 
   return (
     <section
-      id="expertise"
+      id="education"
       ref={containerRef}
       className="relative w-full bg-[#050505] text-white py-20 px-6 md:px-12 select-none overflow-hidden"
     >
@@ -108,13 +106,13 @@ const Expertise = () => {
               <span className="w-1.5 h-1.5 rounded-full bg-red-600 animate-ping"></span>
               <span className="text-red-500 font-bold">EPISODE 02</span>
               <span className="text-white/40">|</span>
-              <span>CORE COMPETENCIES</span>
+              <span> EDUCATION </span>
             </div>
             <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight leading-tight">
               DIRECTOR'S CUT <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-rose-600 to-red-700 drop-shadow-[0_0_25px_rgba(229,9,20,0.35)]">
+              {/* <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-rose-600 to-red-700 drop-shadow-[0_0_25px_rgba(229,9,20,0.35)]">
                 TECHNICAL CAPABILITIES.
-              </span>
+              </span> */}
             </h2>
           </div>
           <p className="text-white/60 text-xs md:text-sm font-light leading-relaxed max-w-xs">
@@ -124,7 +122,7 @@ const Expertise = () => {
 
         {/* Compact 1-on-1 Gradient Stacking Container */}
         <div className="relative flex flex-col gap-8 pb-20">
-          {expertiseData.map((item, index) => (
+          {educationData.map((item, index) => (
             <div
               key={index}
               ref={addToRefs}
@@ -147,10 +145,10 @@ const Expertise = () => {
 
               {/* Card Header Top */}
               <div className="flex items-center justify-between w-full mb-4 relative z-10">
-                <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-red-500 px-2.5 py-0.5 rounded bg-red-600/10 border border-red-600/25">
+                <span className="text-[15px] font-mono font-bold uppercase tracking-widest text-red-500 px-2.5 py-0.5 rounded bg-red-600/10 border border-red-600/25">
                   {item.tag}
                 </span>
-                <span className="text-2xl md:text-3xl font-mono font-black text-white/20">
+                <span className="text-2xl md:text-4xl font-mono font-black text-white/20">
                   {item.number}
                 </span>
               </div>
@@ -164,7 +162,11 @@ const Expertise = () => {
                 </div>
                 <div className="lg:col-span-7">
                   <p className="text-xs md:text-sm text-white/70 font-light leading-relaxed">
-                    {item.text}
+                    <span className="text-red-500 font-semibold">{item.degree}</span>
+                    {" | "}
+                    {item.meta}
+                    {" | "}
+                    <span className="text-red-500 font-bold">{item.aggregate}</span>
                   </p>
                 </div>
               </div>
@@ -180,4 +182,4 @@ const Expertise = () => {
   );
 };
 
-export default Expertise;
+export default Education;

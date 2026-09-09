@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -13,7 +13,7 @@ const projectsData = [
       "A comprehensive HR management platform designed to streamline employee operations, recruitment workflows, leave management, and document generation.",
     tags: ["Node.js", "React.js", "PostgreSQL", "Tailwind CSS"],
     match: "99%",
-    episode: "S01 E01"
+    episode: "S05 E01"
   },
   {
     title: "Hospital Appointment Management System",
@@ -22,7 +22,7 @@ const projectsData = [
       "A web-based solution for managing patient appointments, doctor schedules, and booking workflows through an organized and user-friendly interface.",
     tags: ["Spring Boot", "JWT", "React.js", "PostgreSQL", "Tailwind CSS"],
     match: "98%",
-    episode: "S01 E02"
+    episode: "S05 E02"
   },
   {
     title: "Web Vulnerability Detection using ML",
@@ -31,7 +31,7 @@ const projectsData = [
       "A machine learning-based system designed to detect common web vulnerabilities and improve the efficiency of vulnerability identification and reporting.",
     tags: ["Python", "Scikit-learn", "SQL", "Machine Learning"],
     match: "97%",
-    episode: "S01 E03"
+    episode: "S05 E03"
   },
   {
     title: "Payslip & Document Generator",
@@ -40,7 +40,7 @@ const projectsData = [
       "An automated document generation system for creating professional payslips and downloadable employee documents with support for bulk processing.",
     tags: ["React.js", "jsPDF", "Excel", "JSZip"],
     match: "97%",
-    episode: "S01 E04"
+    episode: "S05 E04"
   },
   {
     title: "Rock Paper Scissors Game",
@@ -49,7 +49,7 @@ const projectsData = [
       "A responsive browser-based game featuring interactive gameplay, real-time score tracking, and a clean user experience.",
     tags: ["JavaScript", "HTML5", "CSS3", "DOM"],
     match: "95%",
-    episode: "S01 E05"
+    episode: "S05 E05"
   },
   {
     title: "Developer Portfolio",
@@ -58,7 +58,7 @@ const projectsData = [
       "A cinematic developer portfolio designed to showcase professional experience, projects, achievements, and technical capabilities through an interactive interface.",
     tags: ["React.js", "Tailwind CSS", "Framer Motion", "JavaScript"],
     match: "100%",
-    episode: "S01 E06"
+    episode: "S05 E06"
   },
   {
     title: "Cloud Deployment & CI/CD",
@@ -67,7 +67,7 @@ const projectsData = [
       "A practical deployment workflow focused on version control, application delivery, and hosting through modern cloud platforms.",
     tags: ["Git", "GitHub", "AWS", "Vercel"],
     match: "98%",
-    episode: "S01 E07"
+    episode: "S05 E07"
   },
   {
     title: "Community Service Project — Air Pollution Awareness",
@@ -76,7 +76,7 @@ const projectsData = [
       "A community-focused project involving a socio-economic survey and awareness activities to educate people about air pollution and its impact on the environment and public well-being.",
     tags: ["Survey", "Research", "Community Service", "Awareness"],
     match: "96%",
-    episode: "S01 E08"
+    episode: "S05 E08"
   }
 ];
 
@@ -87,6 +87,12 @@ const Projects = () => {
   const cardsRef = useRef([]);
   const mobileCardsRef = useRef([]);
   const mobileCarouselRef = useRef(null);
+
+  // Tracks the currently centered mobile project card
+  const [activeProjectIndex, setActiveProjectIndex] = useState(0);
+
+  // Controls mobile navigation direction
+  const [navigationDirection, setNavigationDirection] = useState('next');
 
   useEffect(() => {
     let ctx = gsap.context(() => {
@@ -293,7 +299,7 @@ const Projects = () => {
                 y: 0,
                 rotation: 0,
                 scale: (i) => (i === 0 ? 1 : 0.92),
-                opacity: (i) => (i === 0 ? 1 : 0.5),
+                opacity: (i) => (i === 0 ? 1 : 0.6),
                 duration: 0.8,
                 stagger: 0.08,
                 ease: "expo.out",
@@ -315,12 +321,219 @@ const Projects = () => {
     return () => ctx.revert();
   }, []);
 
+  // Briefly pauses scrolling (both directions) the moment the visitor
+  // reaches the Projects section, so it doesn't fly past unnoticed.
+  // After the short pause, scrolling resumes at completely normal speed.
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    if (prefersReducedMotion) return;
+
+    let isPaused = false;
+    const PAUSE_DURATION = 1000; // milliseconds (~0.5–1s pause requested)
+
+    const blockScrollWhilePaused = (e) => {
+      if (isPaused) e.preventDefault();
+    };
+
+    const triggerPause = () => {
+      if (isPaused) return;
+
+      isPaused = true;
+
+      window.setTimeout(() => {
+        isPaused = false;
+      }, PAUSE_DURATION);
+    };
+
+    // Fires once when the section is reached scrolling down,
+    // and once again when it's reached scrolling back up.
+    const pauseTrigger = ScrollTrigger.create({
+      trigger: container,
+      start: "top center",
+      onEnter: triggerPause,
+      onEnterBack: triggerPause
+    });
+
+    window.addEventListener("wheel", blockScrollWhilePaused, {
+      passive: false
+    });
+
+    window.addEventListener("touchmove", blockScrollWhilePaused, {
+      passive: false
+    });
+
+    return () => {
+      window.removeEventListener("wheel", blockScrollWhilePaused);
+      window.removeEventListener("touchmove", blockScrollWhilePaused);
+      pauseTrigger.kill();
+    };
+  }, []);
+
+  // Keeps the mobile carousel readable: as the visitor swipes, whichever
+  // card sits nearest the center becomes fully visible/full-scale, while
+  // neighboring cards dim and shrink proportionally to their distance —
+  // so each project is clearly viewable one at a time.
+  useEffect(() => {
+    const carousel = mobileCarouselRef.current;
+    if (!carousel) return;
+
+    const updateMobileCardFocus = () => {
+      const containerCenter =
+        carousel.scrollLeft + carousel.offsetWidth / 2;
+
+      let closestIndex = 0;
+      let closestDistance = Infinity;
+
+      mobileCardsRef.current.forEach((card, index) => {
+        if (!card) return;
+
+        const cardCenter =
+          card.offsetLeft + card.offsetWidth / 2;
+
+        const distance = Math.abs(
+          containerCenter - cardCenter
+        );
+
+        // Track the card closest to the center
+        if (distance < closestDistance) {
+          closestDistance = distance;
+          closestIndex = index;
+        }
+
+        const maxDistance = card.offsetWidth * 1.1;
+
+        const proximity = gsap.utils.clamp(
+          0,
+          1,
+          1 - distance / maxDistance
+        );
+
+        gsap.to(card, {
+          opacity: gsap.utils.mapRange(
+            0,
+            1,
+            0.55,
+            1,
+            proximity
+          ),
+
+          scale: gsap.utils.mapRange(
+            0,
+            1,
+            0.9,
+            1,
+            proximity
+          ),
+
+          duration: 0.25,
+          ease: "power1.out",
+          overwrite: "auto"
+        });
+      });
+
+      setActiveProjectIndex(closestIndex);
+
+      // Only reset direction at the first card.
+      // This prevents 8 → 7 from changing the arrow back to →.
+      if (closestIndex === 0) {
+        setNavigationDirection('next');
+      }
+    };
+
+    carousel.addEventListener(
+      "scroll",
+      updateMobileCardFocus,
+      {
+        passive: true
+      }
+    );
+
+    // Set initial active card
+    updateMobileCardFocus();
+
+    return () =>
+      carousel.removeEventListener(
+        "scroll",
+        updateMobileCardFocus
+      );
+  }, []);
+
+  // Mobile project navigation
+  const handleProjectNavigation = () => {
+    if (
+      window.innerWidth >= 768 ||
+      !mobileCarouselRef.current
+    ) {
+      return;
+    }
+
+    const carousel = mobileCarouselRef.current;
+    const currentIndex = activeProjectIndex;
+
+    let nextIndex;
+
+    if (navigationDirection === 'previous') {
+      // Continue moving backward
+      nextIndex = currentIndex - 1;
+
+      // If we reach the first card, switch back to forward navigation
+      if (nextIndex < 0) {
+        setNavigationDirection('next');
+        nextIndex = currentIndex + 1;
+      }
+    } else {
+      // Move forward
+      nextIndex = currentIndex + 1;
+
+      // At the last project, switch to backward navigation
+      if (nextIndex >= projectsData.length) {
+        setNavigationDirection('previous');
+        nextIndex = currentIndex - 1;
+      }
+    }
+
+    const targetCard = mobileCardsRef.current[nextIndex];
+
+    if (targetCard) {
+      const targetScroll =
+        targetCard.offsetLeft -
+        (carousel.offsetWidth - targetCard.offsetWidth) / 2;
+
+      carousel.scrollTo({
+        left: targetScroll,
+        behavior: "smooth"
+      });
+    }
+  };
+
   return (
     <section
       id="projects"
       ref={containerRef}
       className="bg-[#0b0b0b] min-h-[100svh] md:min-h-[170vh] relative font-sans overflow-x-clip text-white w-full flex items-center justify-center py-24 md:py-40 select-none"
     >
+      <div className="absolute top-5 left-4 sm:top-7 sm:left-7 md:top-8 md:left-10 lg:left-16 z-[200] pointer-events-none">
+        <div className="inline-flex h-8 gap-2 sm:h-9 items-center rounded-[4px] border border-red-600/80 bg-black/35 px-3 sm:px-4 backdrop-blur-md shadow-[0_0_24px_rgba(229,9,20,0.08)]">
+          <span className="w-2 h-2 rounded-full bg-red-600 animate-ping"></span>
+
+          <span className="whitespace-nowrap font-mono text-[9px] sm:text-[10px] font-semibold uppercase tracking-[0.18em] text-[#E50914]">
+            EPISODE 05
+          </span>
+
+          <span className="mx-2 sm:mx-3 h-3.5 w-px bg-white/35" />
+
+          <span className="whitespace-nowrap font-mono text-[9px] sm:text-[10px] font-semibold uppercase tracking-[0.18em] text-white/90">
+            PROJECTS
+          </span>
+        </div>
+      </div>
+
       {/* Background Netflix Cinematic Title Watermark */}
       <div className="absolute top-10 left-0 w-full flex items-start justify-center pointer-events-none z-0">
         <h1 className="text-[14vw] sm:text-[17vw] md:text-[20vw] font-black text-white/[0.03] tracking-tighter leading-none whitespace-nowrap uppercase">
@@ -333,8 +546,10 @@ const Projects = () => {
 
       {/* Main Perspective Container */}
       <div className="mt-12 relative w-full max-w-7xl h-full flex items-center justify-center perspective-[2000px] z-10">
+
         {/* Origin Container */}
         <div className="relative w-0 h-0 transform-style-3d">
+
           {/* Folder Back */}
           <div
             ref={folderBackRef}
@@ -357,6 +572,7 @@ const Projects = () => {
               style={{ zIndex: 10 + i }}
             >
               <div className="w-full h-full rounded-[24px] overflow-hidden border border-white/15 bg-[#141414]/95 backdrop-blur-2xl shadow-[0_25px_50px_rgba(0,0,0,0.9)] transition-all duration-500 group hover:scale-[1.04] hover:border-red-600 hover:shadow-[0_35px_80px_rgba(229,9,20,0.35)] hover:-translate-y-2 cursor-pointer relative z-10 p-7 flex flex-col justify-between">
+
                 {/* Top Card Header */}
                 <div className="flex items-center justify-between">
                   <span className="text-[10px] font-mono font-bold tracking-widest uppercase text-red-500 bg-red-600/10 px-2.5 py-1 rounded border border-red-600/20">
@@ -440,6 +656,7 @@ const Projects = () => {
             className="shrink-0 w-[78vw] aspect-[16/11] snap-center will-change-transform relative z-10"
           >
             <div className="w-full h-full rounded-[24px] overflow-hidden border border-white/15 bg-[#141414] p-6 flex flex-col justify-between shadow-[0_20px_40px_rgba(0,0,0,0.9)]">
+
               <div className="flex items-center justify-between">
                 <span className="text-[10px] font-mono font-bold tracking-widest text-red-500 bg-red-600/10 px-2 py-0.5 rounded">
                   {project.episode}
@@ -470,10 +687,42 @@ const Projects = () => {
                   </span>
                 ))}
               </div>
+
             </div>
           </div>
         ))}
       </div>
+
+      {/* Mobile Navigation Arrow */}
+      <button
+        type="button"
+        aria-label={
+          navigationDirection === 'previous'
+            ? 'Swipe to previous project'
+            : 'Swipe to next project'
+        }
+        onClick={handleProjectNavigation}
+        className="absolute right-5 top-1/2 z-[300] flex h-16 w-16 -translate-y-1/2 items-center justify-center rounded-full border-2 border-red-600/70 bg-black/75 text-white shadow-[0_0_30px_rgba(229,9,20,0.35)] backdrop-blur-md transition-all duration-300 hover:border-red-500 hover:bg-red-600/20 hover:shadow-[0_0_40px_rgba(229,9,20,0.5)] active:scale-90 md:hidden"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.5"
+          className="h-8 w-8 animate-pulse"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d={
+              navigationDirection === 'previous'
+                ? "M19 12H5M11 18l-6-6 6-6"
+                : "M5 12h14M13 6l6 6-6 6"
+            }
+          />
+        </svg>
+      </button>
     </section>
   );
 };
