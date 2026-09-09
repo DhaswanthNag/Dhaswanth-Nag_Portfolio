@@ -294,7 +294,7 @@ const Skills = () => {
     <section
       id="skills"
       ref={sectionRef}
-      className="relative w-full h-screen bg-[#0b0b0b] text-white overflow-hidden flex items-center justify-center md:[perspective:1000px] select-none"
+      className="relative w-full min-h-screen md:h-screen bg-[#0b0b0b] text-white overflow-hidden flex items-center justify-center md:[perspective:1000px] select-none"
     >
 
       {/* Responsive Episode 03 Skills Label */}
@@ -359,7 +359,7 @@ const Skills = () => {
       {/* Carousel Container */}
       <div
         ref={carouselRef}
-        className="relative w-full h-full flex md:items-center md:justify-center z-10 md:[transform-style:preserve-3d] overflow-x-auto overflow-y-hidden md:overflow-visible snap-x snap-mandatory scrollbar-hide [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] items-center px-[10vw] pt-32 pb-8 sm:pt-36 md:px-0 md:pt-0 md:pb-0 gap-4 md:gap-0 touch-pan-x"
+        className="relative w-full h-full flex md:items-center md:justify-center z-10 md:[transform-style:preserve-3d] overflow-x-auto overflow-y-hidden md:overflow-visible snap-x snap-mandatory scrollbar-hide [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] items-center px-[10vw] pt-32 pb-8 sm:pt-36 md:px-0 md:pt-0 md:pb-0 gap-4 md:gap-0 touch-pan-y md:touch-auto"
         onScroll={handleScroll}
       >
 
