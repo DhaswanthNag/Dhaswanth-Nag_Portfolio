@@ -55,15 +55,17 @@ const Skills = () => {
   const textRefs = useRef([]);
   const carouselRef = useRef(null);
 
+  const scrollFrameRef = useRef(null);
+
   const [activeSkillIndex, setActiveSkillIndex] = useState(0);
 
   // Controls the direction of the mobile navigation arrow
   const [navigationDirection, setNavigationDirection] = useState('next');
 
-  const handleScroll = (e) => {
-    if (window.innerWidth >= 769) return;
+  const updateMobileScroll = () => {
+    if (window.innerWidth >= 769 || !carouselRef.current) return;
 
-    const container = e.target;
+    const container = carouselRef.current;
     const center = container.scrollLeft + container.offsetWidth / 2;
 
     let activeIdx = 0;
@@ -96,7 +98,7 @@ const Skills = () => {
       if (card) {
         gsap.to(card, {
           scale: i === activeIdx ? 1 : 0.9,
-          duration: 0.4,
+          duration: 0.25,
           ease: 'power2.out',
           overwrite: 'auto'
         });
@@ -107,7 +109,7 @@ const Skills = () => {
       if (bg) {
         gsap.to(bg, {
           opacity: i === activeIdx ? 1 : 0,
-          duration: 0.4,
+          duration: 0.25,
           overwrite: 'auto'
         });
       }
@@ -117,10 +119,23 @@ const Skills = () => {
       if (txt) {
         gsap.to(txt, {
           opacity: i === activeIdx ? 1 : 0,
-          duration: 0.4,
+          duration: 0.25,
           overwrite: 'auto'
         });
       }
+    });
+  };
+
+  const handleScroll = () => {
+    if (window.innerWidth >= 769) return;
+
+    if (scrollFrameRef.current) {
+      cancelAnimationFrame(scrollFrameRef.current);
+    }
+
+    scrollFrameRef.current = requestAnimationFrame(() => {
+      updateMobileScroll();
+      scrollFrameRef.current = null;
     });
   };
 
@@ -287,14 +302,20 @@ const Skills = () => {
       });
     }, sectionRef);
 
-    return () => ctx.revert();
+    return () => {
+      if (scrollFrameRef.current) {
+        cancelAnimationFrame(scrollFrameRef.current);
+      }
+
+      ctx.revert();
+    };
   }, []);
 
   return (
     <section
       id="skills"
       ref={sectionRef}
-      className="relative w-full min-h-screen md:h-screen bg-[#0b0b0b] text-white overflow-hidden flex items-center justify-center md:[perspective:1000px] select-none"
+      className="relative w-full h-screen bg-[#0b0b0b] text-white overflow-hidden flex items-center justify-center md:[perspective:1000px] select-none"
     >
 
       {/* Responsive Episode 03 Skills Label */}
@@ -359,8 +380,11 @@ const Skills = () => {
       {/* Carousel Container */}
       <div
         ref={carouselRef}
-        className="relative w-full h-full flex md:items-center md:justify-center z-10 md:[transform-style:preserve-3d] overflow-x-auto overflow-y-hidden md:overflow-visible snap-x snap-mandatory scrollbar-hide [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] items-center px-[10vw] pt-32 pb-8 sm:pt-36 md:px-0 md:pt-0 md:pb-0 gap-4 md:gap-0 touch-pan-y md:touch-auto"
+        className="relative w-full h-full flex md:items-center md:justify-center z-10 md:[transform-style:preserve-3d] overflow-x-auto overflow-y-hidden md:overflow-visible snap-x snap-proximity scrollbar-hide [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] items-center px-[10vw] pt-32 pb-8 sm:pt-36 md:px-0 md:pt-0 md:pb-0 gap-4 md:gap-0 touch-pan-x touch-pan-y"
         onScroll={handleScroll}
+        style={{
+          touchAction: 'pan-x pan-y'
+        }}
       >
 
         {skillCategories.map((category, i) => (
@@ -435,30 +459,30 @@ const Skills = () => {
       >
 
         <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2.5"
-          className="h-8 w-8 animate-pulse"
-        >
-
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d={
-              navigationDirection === 'previous'
-                ? "M19 12H5M11 18l-6-6 6-6"
-                : "M5 12h14M13 6l6 6-6 6"
-            }
-          />
-
-        </svg>
-
-      </button>
-
-    </section>
-  );
-};
-
+          xmlns="http://www.w3.org/2000/svg" 
+          viewBox="0 0 24 24" 
+          fill="none" 
+          stroke="currentColor" 
+          strokeWidth="2.5" 
+          className="h-8 w-8 animate-pulse" 
+        > 
+ 
+          <path 
+            strokeLinecap="round" 
+            strokeLinejoin="round" 
+            d={ 
+              navigationDirection === 'previous' 
+                ? "M19 12H5M11 18l-6-6 6-6" 
+                : "M5 12h14M13 6l6 6-6 6" 
+            } 
+          /> 
+ 
+        </svg> 
+ 
+      </button> 
+ 
+    </section> 
+  ); 
+}; 
+ 
 export default Skills;
